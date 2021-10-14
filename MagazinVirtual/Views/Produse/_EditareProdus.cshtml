@@ -1,0 +1,70 @@
+﻿@model MagazinVirtual.Models.GetEditProdus
+<!-- Modal -->
+
+<div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+
+        <h4 class="modal-title">
+            Editare Produs
+        </h4>
+        <button type="button" class="close"
+                data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+    <input id="idInputProdusId" style="display:none" value=@Model.Art.Id />
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+
+        <table class=" table table-bordered table-striped table-sm">
+
+
+
+            <tr>
+                <td>Denumire:<span style="color:red">*</span></td>
+                <td><input type="text" class="form-control" maxlength="100" id="IdInputDenumire" value="@Model.Art.Name.Trim()" /></td>
+            </tr>
+
+            <tr>
+                <td>
+                    Categorie:<span style="color:red">*</span>
+                </td>
+                <td>
+                    <select id="SelectIdCategorie" class="form-control" style="width:100%">
+                        <option value="@Model.Art.ProductTypeId">@Model.Art.ProductTypes.Name.Trim()</option>
+                        @foreach (var cat in Model.CategoriiProdus)
+                        {
+                            <option value=@cat.IdCategorie>@cat.NumeCategorie.Trim()</option>
+                        }
+                    </select>
+                </td>
+
+            </tr>
+            
+
+            <tr>
+                <td>Pret:<span style="color:red">*</span></td>
+                <td><input type="number" class="form-control" id="IdInputPrice" value="@Model.Art.Price" /></td>
+            </tr>
+
+            <tr>
+                <td>Mențiuni:<span style="color:red">*</span></td>
+                <td><input type="text" class="form-control" maxlength="100" id="IdInputMentiuni" value="@Model.Art.Description.Trim()" /></td>
+            </tr>
+        </table>
+        <p style="color:red; display:none" id="CampuriObligatorii"> Vă rog să completați toate câmpurile obligatorii, marcate cu *.</p>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-info" id="SubmitProdusEditat" data-url='@Url.Action("EditareProdus", "Produse")'>Salvează</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal"> Închide</button>
+
+    </div>
+</div>
+
+
+

@@ -1,0 +1,64 @@
+﻿@model  MagazinVirtual.Models.CategoriiArticole
+
+
+
+@foreach (var lev0 in Model.ListaArticolePeNivele.Where(x => x.Nivel == 0))
+{
+    <li class="list-group-item" role="presentation" style="cursor: pointer;">
+        <a class=" linkCategorieCuProduse" style="color: black" data-url='@Url.Action("ViewProduseDinCateg", "Produse",new { page=1, IdCategorie=lev0.IdCategorie })'>@lev0.DenumireCategorie @lev0.NrProduse</a>
+
+        @if (Model.ListaArticolePeNivele.Where(x => x.IdParinte == lev0.IdCategorie).Count() > 0)
+        {
+
+            <ul class="list-group-flush">
+                @foreach (var lev1 in Model.ListaArticolePeNivele.Where(x => x.IdParinte == lev0.IdCategorie))
+                {
+                    <li class="list-group-item" role="presentation" style="cursor: pointer">
+                        <a class=" linkCategorieCuProduse " style="color: black" data-url='@Url.Action("ViewProduseDinCateg", "Produse",new { page=1, IdCategorie=lev1.IdCategorie })'>@lev1.DenumireCategorie @lev1.NrProduse</a>
+
+                        @if (Model.ListaArticolePeNivele.Where(x => x.IdParinte == lev1.IdCategorie).Count() > 0)
+                        {
+
+                            <ul class=" list-group-flush">
+                                @foreach (var lev2 in Model.ListaArticolePeNivele.Where(x => x.IdParinte == lev1.IdCategorie))
+                                {
+                                    <li class="list-group-item" role="presentation" style="cursor: pointer">
+                                        <a class=" linkCategorieCuProduse" style="color: black" data-url='@Url.Action("ViewProduseDinCateg", "Produse",new { page=1, IdCategorie=lev2.IdCategorie })'>@lev2.DenumireCategorie @lev2.NrProduse</a>
+
+                                        @if (Model.ListaArticolePeNivele.Where(x => x.IdParinte == lev2.IdCategorie).Count() > 0)
+                                        {
+
+                                            <ul class="list-group-flush">
+                                                @foreach (var lev3 in Model.ListaArticolePeNivele.Where(x => x.IdParinte == lev2.IdCategorie))
+                                                {
+                                                    <li class="list-group-item" role="presentation" style="cursor: pointer">
+                                                        <a class="  linkCategorieCuProduse" style="color: black" data-url='@Url.Action("ViewProduseDinCateg", "Produse",new { page=1, IdCategorie=lev3.IdCategorie })'>@lev3.DenumireCategorie @lev3.NrProduse</a>
+
+                                                        @*@if (Model.ListaArticolePeNivele.Where(x => x.IdParinte == lev3.IdCategorie).Count() > 0)
+                                                            {
+                                                                // INSERARE COD AICI PENTRU MAI MULT DE 4 NIVELE (SE COPIAZA <ul></ul> cu tot cu cuprins
+                                                            }*@
+                                                    </li>
+
+                                                }
+                                            </ul>
+
+                                        }
+                                    </li>
+
+                                }
+                            </ul>
+
+                        }
+                    </li>
+
+                }
+            </ul>
+
+        }
+    </li>
+
+}
+
+
+

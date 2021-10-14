@@ -1,0 +1,102 @@
+﻿@model IEnumerable<MagazinVirtual.Models.Produs>
+@{
+    ViewBag.Title = "Myorder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    int sum = 0;
+    Dictionary<int, int> np = (Dictionary<int, int>)Session["np"];
+
+}
+<div class="row" style="padding-top: 10px" />
+
+<div class="col-2">
+    <img src="~/Content/images/logo.png" width="150px" />
+</div>
+<div id="dvContents" class="col-9">
+
+    <table class="table table-hover table-striped table-bordered">
+        <thead class="table-info">
+            @*<img src="~/Content/images/cokie.jpg" width="100%" height="70px" />*@
+
+
+            <tr>
+                <th>ID</th>
+                <th>Denumire produs</th>
+                <th>Image</th>
+                <th>Cantitate</th>
+                <th>Pret</th>
+                <th>Total produs</th>
+                <th>Actiuni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var x in Model)
+                {
+                    <tr>
+                        <td> @x.IdProdus </td>
+                        <td> @x.DenumireProdus </td>
+                        <td>
+                            <img src='@Url.Content(x.ImgSrc)' class="card-img-top" style='max-width:75px; max-height:100px;' data-toggle="popover" data-placement="top"
+                                 data-content="<img src='@Url.Content(x.ImgSrc)' style='max-width:200px; max-height:200px;' />" />
+                            @*<img id="img1"  src="~/Images/@x.ImagePath/" height="100" width="75" />*@
+                        </td>
+                        <td> @(np[x.IdProdus]) </td>
+                        <td> @x.Price </td>
+                        <td> @(Convert.ToInt32(x.Price)*np[x.IdProdus])</td>
+                        <td>
+                            <button id="btn-add-more" class="btn btn-sm btn-success" data-slno="@x.IdProdus"
+                                    onclick="location.href='@Url.Action("AddSameProduct","AddToCart",new  { id= x.IdProdus})'">
+                                <i class="fa fa-plus-square" data-toggle="tooltip" title="Adauga"></i>
+                            </button>
+                            <button id="btn_delete" class="btn btn-sm btn-danger" data-slno="@x.IdProdus"
+                                    onclick="location.href='@Url.Action("Remove","AddToCart",new  { id= x.IdProdus})'">
+                                <i class="fa fa-trash" data-toggle="tooltip" title="Sterge"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+        @if (Model != null)
+        {
+            foreach (var x in Model)
+            {
+                sum = (Convert.ToInt32(x.Price) * np[x.IdProdus]) + sum;
+            }
+        }
+
+        <tfoot>
+
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td>
+                    <b> Total </b>
+                </td>
+                <td> @sum </td>
+                <td>
+                    <button type="button" class="btn linkCategorieCuProduse" style="background-color:lightpink" onclick="location.href='@Url.Action("Index", "Produse",new { page=1, IdCategorie=0 })'">
+                        <i class="fa fa-shopping-basket"></i> Continuati cumparaturile
+                    </button>
+                    <button type="button" class="btn " style="background-color:darkseagreen" onclick="location.href='@Url.Action("AddOrder", "Order")'">
+                        <i class="fa fa-credit-card"></i> Plasati comanda
+                    </button>
+                </td>
+            </tr>
+            @*<tr class="float-md-right" style="padding: 20px">
+
+                </tr>*@
+        </tfoot>
+
+    </table>
+
+
+
+</div>
+
+</div>

@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Produse";
+}
+
+@model MagazinVirtual.Models.CategoriiArticole
+<div class="">
+    <div class="row  ">
+        <div class="col-3  " id="sidebar-wrapper">
+            <ul class="nav flex-column ">
+                <li class="nav-item">
+                    <table class="table table-borderless table-sm table-responsive ">
+                        <tr>
+                            <td>
+                                <div class="input-group  mb-3">
+                                    <input id="IdFIltruProdus" placeholder="Denumire produs" class="form-control"
+                                           data-url=@Url.Action("FiltrareArticole", "Produse") value="" />
+                                    <div class="input-group-append" style="padding-left: 10px">
+                                        <button id="CautaProduse" class="btn btn-outline-warning">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button id="butonCreareProdus" type="button" class="btn btn-sm" style="background-color: deeppink; color: white" 
+                                            data-url=@Url.Action("CreareProdus", "Produse")>
+                                        <i class="fa fa-plus" data-toggle="tooltip" title="Adauga un produs"></i>Produs
+                                    </button>
+                                    <button id="butonCreareCategorieProdus" type="button" style=" color: white"
+                                            class="btn btn-warning btn-sm" data-url=@Url.Action("CreareCategorieProdus", "Produse")>
+                                        <i class="fa fa-plus" data-toggle="tooltip" title="Adauga o categorie"></i>Categorie
+                                    </button>
+                                    @*<button id="IdRefreshLista" type="button" class="btn btn-sm btn-default glyphicon glyphicon-refresh" > </button>*@
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </li>
+            </ul>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" role="presentation" style="cursor: pointer">
+                    <a class=" linkCategorieCuProduse" style="font-weight: bold; color: deeppink" data-url='@Url.Action("ViewProduseDinCateg", "Produse",new { page=1, IdCategorie=0 })'>Toate</a>
+                </li>
+            </ul>
+            <div style="max-height: 50vh; overflow-y: scroll;">
+                <ul class="list-group list-group-flush" id="ulListaCategoriCuProduse" style="height: auto">
+
+                    @if (Model.ListaArticolePeNivele != null)
+                    {
+                        @Html.Partial("_ListaCategoriiProduse", Model)
+                    }
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-9">
+            @*<div class="row"> <h2 class="card-title" style="color: #023040;">Produse</h2>
+        <h3 class="card-text" style="background-color: lightyellow;color: black">Comanda acum si beneficiezi de 10% discout la torturi! Oferta valabila 11-25 octombrie!</h3>*@
+
+            <div id="tabelaProdus">
+                <h4 class="card-title" style="padding: 10px ;">
+                    Rasfoieste!
+                </h4>
+            </div>
+            @*</div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ProdusModal" role="dialog"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-lg" id="ProdusContainer">
+    </div>
+</div>
+
+
+
+

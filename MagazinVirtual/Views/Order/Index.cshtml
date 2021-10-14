@@ -1,0 +1,86 @@
+﻿@model MagazinVirtual.Models.Order
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    int sum = 0;
+    Dictionary<int, int> np = (Dictionary<int, int>)Session["np"];
+
+}
+<div class="row" style="padding-top: 10px" />
+
+<div class="col-2">
+    <img src="~/Content/images/logo.png" width="150px" />
+</div>
+<div id="dvContents" class="col-9">
+
+    <table class="table table-hover table-bordered ">
+        <thead class="table-danger">
+            @*<img src="~/Content/images/cokie.jpg" width="100%" height="70px" />*@
+
+
+            <tr>
+                <th>ID</th>
+                <th>Nume client</th>
+                <th>Detalii client</th>
+                <th>Produse comanda</th>
+                <th>Data comanda</th>
+                <th>Actiuni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.od != null)
+            {
+                foreach (var x in Model.od)
+                {
+                    <tr>
+                        <td> @x.id </td>
+                        <td> @x.name </td>
+                        <td>
+
+                            @x.address; @x.phone; @x.email
+                        </td>
+                        <td>
+                            <table class="table-warning">
+                                <tr>
+                                    
+                                        @foreach (var y in x.produse)
+                                        {
+                                    <td>
+                                        <input id="idProdusDinComanda" value="@y.idprodus" style="display:none;" />
+                                         @y.denumire; @y.qty x @y.price = @y.value lei;
+                                    </td>
+                                    }</tr>
+                            </table>
+                        </td>
+                        
+                        
+
+                        <td> @x.date </td>
+
+                        <td>
+                            <button id="btn-add-more" class="btn btn-sm btn-success" data-slno="@x.id" disabled
+                                    onclick="location.href='@Url.Action("Edit","Order",new  { id= x.id})'">
+                                <i class="fa fa-edit" data-toggle="tooltip" title="Editare comanda"></i>
+                            </button>
+                            <button id="btn_delete" class="btn btn-sm btn-danger" data-slno="@x.id" disabled
+                                    onclick="location.href='@Url.Action("Remove","Order",new  { id= x.id})'">
+                                <i class="fa fa-trash" data-toggle="tooltip" title="Sterge comanda"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+       
+
+      
+
+    </table>
+
+
+
+</div>
+
+</div>

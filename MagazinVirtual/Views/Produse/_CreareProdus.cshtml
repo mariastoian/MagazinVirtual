@@ -1,0 +1,87 @@
+﻿@model MagazinVirtual.Models.GetCreareProdus
+<!-- Modal -->
+
+<div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+
+        <h4 class="modal-title">
+            Adaugă un produs
+        </h4>
+        <button type="button" class="close"
+                data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+    @*<input id="idInputClient" style="display:none" value=@Model.idClient />*@
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+
+        <table class=" table table-bordered table-striped table-sm">
+
+
+            <tr class="text-success">
+                <td style="font-weight:bold">Atribut</td>
+                <td style="font-weight:bold">Valoare</td>
+
+            </tr>
+            <tr>
+                <td>Denumire produs:<span style="color:red">*</span></td>
+                <td><input type="text" class="form-control small" maxlength="100" id="IdInputDenumire" placeholder="Denumire produs" /></td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    Categorie:<span style="color:red">*</span>
+                </td>
+                <td>
+
+                    <select id="SelectIdCategorie" class="form-control" style="width:100%">
+
+                        <option value="" disabled selected hidden>Selectează o categorie</option>
+                        @foreach (var cat in Model.CategoriiProdus)
+                        {
+                            <option value=@cat.IdCategorie>@cat.NumeCategorie</option>
+                        }
+                    </select>
+                </td>
+
+            </tr>
+            
+
+           
+
+            @*<tr>
+                <td>Cod de Bare:</td>
+                <td><input type="text" class="form-control" maxlength="50" id="IdInputCodDeBare" placeholder="Cod de Bare" /></td>
+                </tr>*@
+           
+            
+            <tr>
+                <td>Pret:<span style="color:red">*</span></td>
+                <td><input type="number" class="form-control" id="IdInputPrice" placeholder="Pret" /></td>
+            </tr>
+
+            <tr>
+                <td>Descriere produs:<span style="color:red">*</span></td>
+                <td><input type="text" class="form-control small" maxlength="100" id="IdInputMentiuni" placeholder="Descriere produs" /></td>
+            </tr>
+
+        </table>
+        <p style="color:red; display:none" id="CampuriObligatorii"> Vă rog să completați toate câmpurile obligatorii, marcate cu *.</p>
+
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn " id="SubmitProdus"  style="background-color: deeppink;color: white" data-url='@Url.Action("CreareProdus", "Produse")'>Salvează</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal"> Închide</button>
+
+    </div>
+</div>
+
+
+

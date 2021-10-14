@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Produse";
+}
+
+@model MagazinVirtual.Models.CategorieCuProduse
+@using PagedList.Mvc
+
+<div class="panel panel-info" style="margin-top: 1%">
+    <div class="card-title panel-heading" id="JnName" style="font-weight: bold; color: #023040;">@Model.DenumireCategorie</div>
+
+    <div id="LoadProduse" class="row">
+        <input id="idCategorieModel" value="@Model.IdCategorie" style="display:none;" />
+        @foreach (var item in Model.ProduseInCategorie)
+        {
+            <div class="card m-2" style="width: 18rem;">
+                <img src='@Url.Content(item.ImgSrc)' class="card-img-top" style='max-width:300px; max-height:300px;' data-toggle="popover" data-placement="top"
+                     data-content="<img src='@Url.Content(item.ImgSrc)' style='max-width:200px; max-height:200px;' />" />
+
+                <div class="card-body" id="TableProduseBody">
+                    <h5 class="card-title">@item.DenumireProdus</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.DenumireCategorieProdus</h6>
+                    <p class="card-text">@item.Mentiuni</p>
+                    <p class="card-text">@item.Price lei</p>
+
+                    <a class="btn btn-success btn-sm EditareProdus"
+                       data-url="@Url.Action("EditareProdus", "Produse", new {idProdus = item.IdProdus})">
+                        <i class="fa fa-edit" data-toggle="tooltip" title="Editare Produs"></i>
+                    </a>
+                    <label>
+
+                  
+                    <a class=" btn btn-info btn-sm ">
+                        <input style="display:none" accept="image/x-png,image/gif,image/jpeg,image/jpg" required
+                               data-id="@item.IdProdus" data-idcatart="@Model.IdCategorie" data-pagina="@Model.PageNr" size="60"
+                               data-url="@Url.Action("UploadImagine", "Produse")" type="file" id="SelectImageArticol" />
+                        <span class="fa fa-paperclip" data-toggle="tooltip" title="Încărcare imagine"></span>
+                    </a>
+                    </label>
+                    <a class="btn btn-danger btn-sm StergeProdus"
+                       data-toggle="confirmation"
+                       data-url="@Url.Action("StergeProdus", "Produse", new {idProdus = item.IdProdus})">
+
+                        <i class="fa fa-trash" data-toggle="tooltip" title="Sterge Produs"></i>
+                    </a>
+                    <div class="float-right ">
+                        <p>
+                            @(@item.Activ? "Disponibil" : "Indisponibil")
+                            <input class="StareProdus" data-url="@Url.Action("StareProdus", "Produse", new {IdArt = item.IdProdus})"
+                                   type="checkbox" @(item.Activ ? "checked" : "") />
+                        </p>
+                    </div>
+                    <div class="float-right " style="padding-top: 5px">
+
+                        <a id="btn_add" href="@Url.Action("Add", "AddToCart", new { id = item.IdProdus })" class="btn btn-sm" style="background-color: lightpink;color: black;margin-left:60px">
+                            <i class="fa fa-shopping-basket" data-toggle="tooltip" title="Adauga in cos">  ADAUGA IN COS</i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+    <div id="paginareCategorieCuProduse" class="text-right small ">
+        @Html.PagedListPager(Model.ProduseInCategorie, page => Url.Action("ViewProduseDinCateg", new { page, IdCategorie = Model.IdCategorie }),
+        new PagedListRenderOptions { LinkToFirstPageFormat = "Prima", LinkToPreviousPageFormat = "Înapoi", LinkToNextPageFormat = "Înainte", LinkToLastPageFormat = "Ultima" })
+    </div>
+</div>
+
+
+
+

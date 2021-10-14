@@ -1,0 +1,75 @@
+﻿@model MagazinVirtual.Models.Categorii
+<!-- Modal -->
+
+<div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h4 class="modal-title" id="ModalClient">
+            Categorie Produs
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+    @*<input id="idInputClient" style="display:none" value=@Model.idClient />*@
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+
+        <table id="selectCategorieTable" class=" table table-bordered table-striped table-sm">
+
+
+            <tr>
+                <td style="font-weight:bold">Categorie</td>
+                <td style="font-weight:bold">Parinte Categorie</td>
+                <td style="font-weight:bold">Produse Continute</td>
+                <td style="font-weight:bold"> Acțiuni</td>
+            </tr>
+            @foreach (var c in Model.ListaCategori)
+            {
+                <tr>
+                    <td>@c.NumeCategorie </td>
+                    <td>@c.NumeParinteCategorie</td>
+                    <td>@c.ProduseContinute</td>
+                    <td>
+                        <a class="btn btn-outline-danger btn-sm StergeCategorieProdus enabled"
+                           data-toggle="confirmation"
+                           data-nrIteme=@c.ProduseContinute
+                           data-url="@Url.Action("StergeCategorieProdus", "Produse",
+                                     new {idCategorie = @c.IdCategorie })">
+                            <i class="fa fa-trash data-toggle="tooltip" title="Sterge Categorie"></i>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    <input type="text" class="small form-control" maxlength="50" id="IdInputCategorie" placeholder="Categorie noua" />
+                </td>
+                <td>
+                    <select id="IdSelectParinteCategorie" class="form-control" style="width:100%">
+                        <option value="0"></option>
+                        @foreach (var cat in Model.ListaCategori)
+                        {
+                            <option value=@cat.IdCategorie>@cat.NumeCategorie</option>
+                        }
+                    </select>
+                </td>
+                <td colspan="3">
+                </td>
+            </tr>
+        </table>
+        <p style="color:red; display:none" id="CampuriObligatorii">Vă rog să completați numele categoriei.</p>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn  pull-right" id="SubmitCategorieProdus" style="background-color: deeppink;color: white" data-url='@Url.Action("CreareCategorieProdus", "Produse")'>Salvează</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal"> Închide </button>
+
+    </div>
+</div>
+
+
